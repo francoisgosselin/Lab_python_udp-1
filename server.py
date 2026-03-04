@@ -5,13 +5,14 @@ import hashlib
 
 HOST = "127.0.0.1"
 PORT = 12346
+BLOCK_SIZE = 2048
 
 with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as s:
     s.bind((HOST, PORT))
     print(f"Serveur UDP sur {HOST}:{PORT}")
 
     while True:
-        data, addr = s.recvfrom(2048)
+        data, addr = s.recvfrom(BLOCK_SIZE)
 
         try:
             # Séparer message et hash
@@ -29,3 +30,5 @@ with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as s:
 
         except Exception:
             s.sendto(b"Format invalide", addr)
+
+""" Manque l'implémentation du nonce """
